@@ -41,7 +41,6 @@ public class PackageTree {
         for (String path : paths) {
             if (null != tmpNode.getChildNodes() && null == tmpNode.getChildNodes().get(path)) {
                 PackageNode newNode = new PackageNode();
-                newNode.setState(PackageNodeState.COMPLETE);
                 newNode.setWord(path);
                 Map<String, PackageNode> newNodeMap = new HashMap<String, PackageNode>();
                 newNodeMap.put(path, newNode);

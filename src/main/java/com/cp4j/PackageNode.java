@@ -17,16 +17,13 @@ public class PackageNode {
 
     private Map<String, PackageNode> childNodes;
 
-    private PackageNodeState state;
-
     public PackageNode() {
     }
 
-    public PackageNode(String word, Set<String> files, Map<String, PackageNode> childNodes, PackageNodeState state) {
+    public PackageNode(String word, Set<String> files, Map<String, PackageNode> childNodes) {
         this.word = word;
         this.files = files;
         this.childNodes = childNodes;
-        this.state = state;
     }
 
     public String getWord() {
@@ -45,10 +42,6 @@ public class PackageNode {
         }
     }
 
-    public PackageNodeState getState() {
-        return state;
-    }
-
     public void setWord(String word) {
         this.word = word;
     }
@@ -63,10 +56,6 @@ public class PackageNode {
         } else {
             this.childNodes.putAll(childNodes);
         }
-    }
-
-    public void setState(PackageNodeState state) {
-        this.state = state;
     }
 
 }
