@@ -1,5 +1,7 @@
 package com.cp4j;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,6 +20,8 @@ public class PackageNode {
     private Map<String, PackageNode> childNodes;
 
     public PackageNode() {
+        this.files = new LinkedHashSet<String>();
+        this.childNodes = new LinkedHashMap<String, PackageNode>();
     }
 
     public PackageNode(String word, Set<String> files, Map<String, PackageNode> childNodes) {
@@ -35,11 +39,7 @@ public class PackageNode {
     }
 
     public Map<String, PackageNode> getChildNodes() {
-        if (null != this.childNodes) {
-            return new ConcurrentHashMap<String, PackageNode>(this.childNodes);
-        } else {
-            return new ConcurrentHashMap<String, PackageNode>(0);
-        }
+        return new ConcurrentHashMap<String, PackageNode>(this.childNodes);
     }
 
     public void setWord(String word) {
@@ -51,11 +51,7 @@ public class PackageNode {
     }
 
     public void setChildNodes(Map<String, PackageNode> childNodes) {
-        if (null == this.childNodes) {
-            this.childNodes = childNodes;
-        } else {
-            this.childNodes.putAll(childNodes);
-        }
+        this.childNodes.putAll(childNodes);
     }
 
 }
