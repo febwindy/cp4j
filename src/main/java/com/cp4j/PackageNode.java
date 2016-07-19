@@ -1,7 +1,5 @@
 package com.cp4j;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,11 +15,14 @@ public class PackageNode {
 
     private Set<String> files;
 
-    private Map<Integer, PackageNode> childNodes;
+    private Map<String, PackageNode> childNodes;
 
     private PackageNodeState state;
 
-    protected PackageNode(String word, Set<String> files, Map<Integer, PackageNode> childNodes, PackageNodeState state) {
+    public PackageNode() {
+    }
+
+    public PackageNode(String word, Set<String> files, Map<String, PackageNode> childNodes, PackageNodeState state) {
         this.word = word;
         this.files = files;
         this.childNodes = childNodes;
@@ -36,8 +37,12 @@ public class PackageNode {
         return new CopyOnWriteArraySet<String>(this.files);
     }
 
-    public Map<Integer, PackageNode> getChildNodes() {
-        return new ConcurrentHashMap<Integer, PackageNode>(this.childNodes);
+    public Map<String, PackageNode> getChildNodes() {
+        if (null != this.childNodes) {
+            return new ConcurrentHashMap<String, PackageNode>(this.childNodes);
+        } else {
+            return new ConcurrentHashMap<String, PackageNode>(0);
+        }
     }
 
     public PackageNodeState getState() {
@@ -52,52 +57,16 @@ public class PackageNode {
         this.files = files;
     }
 
-    public void setChildNodes(Map<Integer, PackageNode> childNodes) {
-        this.childNodes = childNodes;
+    public void setChildNodes(Map<String, PackageNode> childNodes) {
+        if (null == this.childNodes) {
+            this.childNodes = childNodes;
+        } else {
+            this.childNodes.putAll(childNodes);
+        }
     }
 
     public void setState(PackageNodeState state) {
         this.state = state;
     }
 
-    public static final class Builder {
-
-        private String word;
-
-        private Set<String> files;
-
-        private Map<Integer, PackageNode> childNodes;
-
-        private PackageNodeState state;
-
-        public Builder() {
-            this.files = new LinkedHashSet<String>();
-            this.childNodes = new LinkedHashMap<Integer, PackageNode>();
-        }
-
-        public PackageNode build() {
-            return new PackageNode(this.word, this.files,this.childNodes, this.state);
-        }
-
-        public Builder addWord(String word) {
-            this.word = word;
-            return this;
-        }
-
-        public Builder addFile(String file) {
-            this.files.add(file);
-            return this;
-        }
-
-        public Builder addChildNode(Integer key, PackageNode childNode) {
-            this.childNodes.put(key, childNode);
-            return this;
-        }
-
-        public Builder addState(PackageNodeState state) {
-            this.state = state;
-            return this;
-        }
-
-    }
 }

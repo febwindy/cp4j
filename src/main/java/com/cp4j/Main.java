@@ -8,8 +8,7 @@ package com.cp4j;
 public class Main {
 
     public static void main(String[] args) {
-        PackageTree tree = new PackageTree();
-        PackageNode root = tree.createNode();
+        PackageNode root = new PackageTree.Builder().build();
         System.out.println();
     }
 
